@@ -1,9 +1,8 @@
 //
 //  UIResponder+TestHelpers.swift
-//  Zorts
+//  AMTestHelpers
 //
 //  Created by Anthony Miller on 8/5/15.
-//  Copyright (c) 2015 App-Order. All rights reserved.
 //
 
 import UIKit
