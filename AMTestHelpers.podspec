@@ -1,40 +1,21 @@
-#
-# Be sure to run `pod lib lint AMTestHelpers.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
   s.name             = "AMTestHelpers"
   s.version          = "0.1.0"
-  s.summary          = "A short description of AMTestHelpers."
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!  
+  s.summary          = "A collection of extensions and methods that make unit testing difficult behaviors easy."
   s.description      = <<-DESC
+    `AMTestHelpers` helps make unit testing behaviors that are difficult to test, such as presenting view controllers, simple and easy through method swizzling.
                        DESC
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/AMTestHelpers"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.homepage         = "https://github.com/AnthonyMDev/AMTestHelpers"
   s.license          = 'MIT'
-  s.author           = { "Anthony Miller" => "anthony@app-order.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/AMTestHelpers.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { "Anthony Miller" => "AnthonyMDev@gmail.com.com" }
+  s.source           = { :git => "https://github.com/AnthonyMDev/AMTestHelpers.git", :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/AnthonyMDev'
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'AMTestHelpers' => ['Pod/Assets/*.png']
-  }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.frameworks = 'UIKit'
 end

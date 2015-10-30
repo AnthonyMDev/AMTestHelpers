@@ -1,0 +1,14 @@
+PODS:
+  - AMTestHelpers (0.1.0)
+
+DEPENDENCIES:
+  - AMTestHelpers (from `../`)
+
+EXTERNAL SOURCES:
+  AMTestHelpers:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  AMTestHelpers: 6cccbcfc5d6c6b530f2924169bf9b14b70a524e3
+
+COCOAPODS: 0.39.0

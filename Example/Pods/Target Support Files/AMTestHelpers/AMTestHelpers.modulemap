@@ -1,0 +1,6 @@
+framework module AMTestHelpers {
+  umbrella header "AMTestHelpers-umbrella.h"
+
+  export *
+  module * { export * }
+}
