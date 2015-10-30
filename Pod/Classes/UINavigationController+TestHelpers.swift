@@ -20,28 +20,28 @@ extension UINavigationController {
       let originalSelector = Selector("pushViewController:animated:")
       let swizzledSelector = Selector("AM_testPushViewController:animated:")
       
-      swizzleMethod(UIViewController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
+      swizzleMethod(UINavigationController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
     }
     
     dispatch_once(&Static.popToken) {
       let originalSelector = Selector("popViewControllerAnimated:")
       let swizzledSelector = Selector("AM_testPopViewControllerAnimated:")
       
-      swizzleMethod(UIViewController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
+      swizzleMethod(UINavigationController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
     }
     
     dispatch_once(&Static.popToVCToken) {
       let originalSelector = Selector("popToViewController:animated:")
       let swizzledSelector = Selector("AM_testPopToViewController:animated:")
       
-      swizzleMethod(UIViewController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
+      swizzleMethod(UINavigationController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
     }
     
     dispatch_once(&Static.popToVCToken) {
       let originalSelector = Selector("popToRootViewControllerAnimated:")
       let swizzledSelector = Selector("AM_testPopToRootViewControllerAnimated:")
       
-      swizzleMethod(UIViewController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
+      swizzleMethod(UINavigationController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
     }
     
   }
@@ -50,12 +50,18 @@ extension UINavigationController {
     if let VCs = self.AM_testViewControllers {
       let newVCs = VCs + [viewController]
       self.AM_testViewControllers = newVCs
+      
+    } else {
+      self.AM_testViewControllers = [viewController]
     }
+    self.addChildViewController(viewController)
   }
     
   func AM_testPopViewControllerAnimated(animated: Bool) -> UIViewController? {
     if var VCs = self.AM_testViewControllers {
       let poppedVC = VCs.removeLast()
+      poppedVC.removeFromParentViewController()
+      
       self.AM_testViewControllers = VCs
       return poppedVC
     }
@@ -74,7 +80,9 @@ extension UINavigationController {
           foundVC = true
           
         } else {
-          poppedVCs.append(VCs.removeLast())
+          let poppedVC = VCs.removeLast()
+          poppedVC.removeFromParentViewController()
+          poppedVCs.append(poppedVC)
         }
       }
       
@@ -91,6 +99,9 @@ extension UINavigationController {
         VCs.removeFirst()
       }
       self.AM_testViewControllers = nil
+      for VC in VCs {
+        VC.removeFromParentViewController()
+      }
       return VCs
     }
     
