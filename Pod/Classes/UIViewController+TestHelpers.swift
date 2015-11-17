@@ -7,6 +7,8 @@
 
 import UIKit
 
+import JRSwizzle
+
 extension UIViewController {
   public override class func initialize() {
     struct Static {
@@ -18,14 +20,18 @@ extension UIViewController {
       let originalSelector = Selector("presentViewController:animated:completion:")
       let swizzledSelector = Selector("AM_testPresentViewController:animated:completion:")
       
-      swizzleMethod(UIViewController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
+      do { try UIViewController.self.jr_swizzleMethod(originalSelector, withMethod: swizzledSelector) } catch {
+        debugPrint(error)
+      }
     }
     
     dispatch_once(&Static.dismissToken) {
       let originalSelector = Selector("dismissViewControllerAnimated:completion:")
       let swizzledSelector = Selector("AM_testDismissViewControllerAnimated:completion:")
       
-      swizzleMethod(UIViewController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
+      do { try UIViewController.self.jr_swizzleMethod(originalSelector, withMethod: swizzledSelector) } catch {
+        debugPrint(error)
+      }
     }
     
   }

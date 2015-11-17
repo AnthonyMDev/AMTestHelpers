@@ -84,10 +84,8 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-AMTestHelpers_Tests/JRSwizzle.framework"
-  install_framework "Pods-AMTestHelpers_Tests/AMTestHelpers.framework"
+  install_framework "Pods/JRSwizzle.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-AMTestHelpers_Tests/JRSwizzle.framework"
-  install_framework "Pods-AMTestHelpers_Tests/AMTestHelpers.framework"
+  install_framework "Pods/JRSwizzle.framework"
 fi

@@ -7,6 +7,8 @@
 
 import UIKit
 
+import JRSwizzle
+
 extension UINavigationController {
   public override class func initialize() {
     struct Static {
@@ -20,28 +22,36 @@ extension UINavigationController {
       let originalSelector = Selector("pushViewController:animated:")
       let swizzledSelector = Selector("AM_testPushViewController:animated:")
       
-      swizzleMethod(UINavigationController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
+      do { try UINavigationController.self.jr_swizzleMethod(originalSelector, withMethod: swizzledSelector) } catch {
+        debugPrint(error)
+      }
     }
     
     dispatch_once(&Static.popToken) {
       let originalSelector = Selector("popViewControllerAnimated:")
       let swizzledSelector = Selector("AM_testPopViewControllerAnimated:")
       
-      swizzleMethod(UINavigationController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
+      do { try UINavigationController.self.jr_swizzleMethod(originalSelector, withMethod: swizzledSelector) } catch {
+        debugPrint(error)
+      }
     }
     
     dispatch_once(&Static.popToVCToken) {
       let originalSelector = Selector("popToViewController:animated:")
       let swizzledSelector = Selector("AM_testPopToViewController:animated:")
       
-      swizzleMethod(UINavigationController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
+      do { try UINavigationController.self.jr_swizzleMethod(originalSelector, withMethod: swizzledSelector) } catch {
+        debugPrint(error)
+      }
     }
     
     dispatch_once(&Static.popToVCToken) {
       let originalSelector = Selector("popToRootViewControllerAnimated:")
       let swizzledSelector = Selector("AM_testPopToRootViewControllerAnimated:")
       
-      swizzleMethod(UINavigationController.self, originalSelector: originalSelector, swizzledSelector: swizzledSelector)
+      do { try UINavigationController.self.jr_swizzleMethod(originalSelector, withMethod: swizzledSelector) } catch {
+        debugPrint(error)
+      }
     }
     
   }

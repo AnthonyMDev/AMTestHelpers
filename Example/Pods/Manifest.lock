@@ -1,14 +1,18 @@
 PODS:
-  - AMTestHelpers (0.1.0)
+  - AMTestHelpers (0.2.0):
+    - JRSwizzle (~> 1.0)
+  - JRSwizzle (1.0)
 
 DEPENDENCIES:
   - AMTestHelpers (from `../`)
+  - JRSwizzle (~> 1.0)
 
 EXTERNAL SOURCES:
   AMTestHelpers:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AMTestHelpers: 6cccbcfc5d6c6b530f2924169bf9b14b70a524e3
+  AMTestHelpers: e594eb07dda12ecbd442d18dba50e02724d34e02
+  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
 
 COCOAPODS: 0.39.0
