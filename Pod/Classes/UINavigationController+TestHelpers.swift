@@ -50,107 +50,109 @@ fileprivate let swizzleUINavigationControllerPopToRootViewController: () = {
 }()
 
 extension UINavigationController {
-  open override class func initialize() {
-    swizzleUINavigationControllerPushViewController
-    swizzleUINavigationControllerPopViewController
-    swizzleUINavigationControllerPopToViewController
-    swizzleUINavigationControllerPopToRootViewController
-  }
-  
-  func AM_testPushViewController(_ viewController: UIViewController, animated: Bool) {
-    if let VCs = self.AM_testViewControllers {
-      let newVCs = VCs + [viewController]
-      self.AM_testViewControllers = newVCs
-      
-    } else {
-      self.AM_testViewControllers = [viewController]
-    }
-    self.addChildViewController(viewController)
-  }
-    
-  func AM_testPopViewControllerAnimated(_ animated: Bool) -> UIViewController? {
-    if var VCs = self.AM_testViewControllers {
-      let poppedVC = VCs.removeLast()
-      poppedVC.removeFromParentViewController()
-      
-      self.AM_testViewControllers = VCs
-      return poppedVC
+    open override class func initialize() {
+        swizzleUINavigationControllerPushViewController
+        swizzleUINavigationControllerPopViewController
+        swizzleUINavigationControllerPopToViewController
+        swizzleUINavigationControllerPopToRootViewController
     }
     
-    return nil
-  }
-  
-  func AM_testPopToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
-    if var VCs = self.AM_testViewControllers {
-      var foundVC = false
-      var poppedVCs: [UIViewController] = []
-      
-      while !foundVC {
-        let VC = VCs.last
-        if VC === viewController {
-          foundVC = true
-          
+    func AM_testPushViewController(_ viewController: UIViewController, animated: Bool) {
+        if let VCs = self.AM_testViewControllers {
+            let newVCs = VCs + [viewController]
+            self.AM_testViewControllers = newVCs
+            
         } else {
-          let poppedVC = VCs.removeLast()
-          poppedVC.removeFromParentViewController()
-          poppedVCs.append(poppedVC)
+            self.AM_testViewControllers = [viewController]
         }
-      }
-      
-      self.AM_testViewControllers = VCs
-      return poppedVCs
+        self.addChildViewController(viewController)
     }
     
-    return nil
-  }
-  
-  func AM_testPopToRootViewControllerAnimated(_ animated: Bool) -> [UIViewController]? {
-    if var VCs = self.AM_testViewControllers {
-      if VCs.first === viewControllers.first {
-        VCs.removeFirst()
-      }
-      self.AM_testViewControllers = nil
-      for VC in VCs {
-        VC.removeFromParentViewController()
-      }
-      return VCs
+    func AM_testPopViewControllerAnimated(_ animated: Bool) -> UIViewController? {
+        if var VCs = self.AM_testViewControllers {
+            let poppedVC = VCs.removeLast()
+            poppedVC.removeFromParentViewController()
+            
+            self.AM_testViewControllers = VCs
+            return poppedVC
+        }
+        
+        return nil
     }
     
-    return nil
-  }
-  
-  fileprivate struct AssociatedKeys {
-    static var TestViewControllers = "AM_testViewControllers"
-  }
-  
-  public var AM_testViewControllers: [UIViewController]? {
-    get {
-      guard let VCs = objc_getAssociatedObject(self, &AssociatedKeys.TestViewControllers) as? [UIViewController] else {
-        if let rootVC = viewControllers.first {
-          return [rootVC]
-        } else {
-          return nil
+    func AM_testPopToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+        if var VCs = self.AM_testViewControllers {
+            var foundVC = false
+            var poppedVCs: [UIViewController] = []
+            
+            while !foundVC {
+                let VC = VCs.last
+                if VC === viewController {
+                    foundVC = true
+                    
+                } else {
+                    let poppedVC = VCs.removeLast()
+                    poppedVC.removeFromParentViewController()
+                    poppedVCs.append(poppedVC)
+                }
+            }
+            
+            self.AM_testViewControllers = VCs
+            return poppedVCs
         }
-      }
-      
-      if let rootVC = viewControllers.first , VCs.first != rootVC {
-        return [rootVC] + VCs
-      }
-      
-      return VCs
+        
+        return nil
     }
-    set {
-      objc_setAssociatedObject(self,
-        &AssociatedKeys.TestViewControllers,
-        newValue,
-        objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    
+    func AM_testPopToRootViewControllerAnimated(_ animated: Bool) -> [UIViewController]? {
+        if var VCs = self.AM_testViewControllers {
+            if VCs.first === viewControllers.first {
+                VCs.removeFirst()
+            }
+            self.AM_testViewControllers = nil
+            for VC in VCs {
+                VC.removeFromParentViewController()
+            }
+            return VCs
+        }
+        
+        return nil
     }
-  }
-  
-  public var AM_testTopViewController: UIViewController? {
-    get {
-      return AM_testViewControllers?.last
+    
+    fileprivate struct AssociatedKeys {
+        static var TestViewControllers = "AM_testViewControllers"
     }
-  }
-  
+    
+    public var AM_testViewControllers: [UIViewController]? {
+        get {
+            guard let VCs = objc_getAssociatedObject(self,
+                                                     &AssociatedKeys.TestViewControllers) as? [UIViewController] else {
+                                                        
+                if let rootVC = viewControllers.first {
+                    return [rootVC]
+                } else {
+                    return nil
+                }
+            }
+            
+            if let rootVC = viewControllers.first , VCs.first != rootVC {
+                return [rootVC] + VCs
+            }
+            
+            return VCs
+        }
+        set {
+            objc_setAssociatedObject(self,
+                                     &AssociatedKeys.TestViewControllers,
+                                     newValue,
+                                     objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+    
+    public var AM_testTopViewController: UIViewController? {
+        get {
+            return AM_testViewControllers?.last
+        }
+    }
+    
 }

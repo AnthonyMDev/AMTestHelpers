@@ -53,7 +53,10 @@ extension UIViewController {
         swizzleUIViewControllerPresentingViewController
     }
     
-    func AM_testPresentViewController(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
+    func AM_testPresentViewController(_ viewControllerToPresent: UIViewController,
+                                      animated flag: Bool,
+                                      completion: (() -> Void)?) {
+        
         viewControllerToPresent.AM_testPresentingViewController = self
         self.AM_testPresentedViewController = viewControllerToPresent
         completion?()
@@ -72,7 +75,7 @@ extension UIViewController {
     func AM_testGetPresentingViewController() -> UIViewController? {
         return AM_testPresentingViewController
     }
-
+    
     // MARK: Associated Objects
     
     fileprivate struct AssociatedKeys {

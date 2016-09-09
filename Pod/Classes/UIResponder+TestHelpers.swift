@@ -39,50 +39,52 @@ fileprivate let swizzleUIResponderIsFirstResponder: () = {
 }()
 
 extension UIResponder {
-  open override class func initialize() {
-    swizzleUIResponderBecomeFirstResponder
-    swizzleUIResponderResignFirstResponder
-    swizzleUIResponderIsFirstResponder
-  }
-  
-  func AM_testBecomeFirstResponder() -> Bool {
-    AM_testIsFirstResponderValue = true
-    self.AM_testBecomeFirstResponder()
+    open override class func initialize() {
+        swizzleUIResponderBecomeFirstResponder
+        swizzleUIResponderResignFirstResponder
+        swizzleUIResponderIsFirstResponder
+    }
     
-    return AM_testIsFirstResponderValue
-  }
-    
-  func AM_testResignFirstResponder() -> Bool {
-    AM_testIsFirstResponderValue = false
-    self.AM_testResignFirstResponder()
-    
-    return AM_testIsFirstResponderValue
-  }
-  
-  func AM_testIsFirstResponder() -> Bool {
-    return AM_testIsFirstResponderValue
-  }
-  
-  fileprivate struct AssociatedKeys {
-    static var TestIsFirstResponderValue = "AM_testIsFirstResponderValue"
-  }
-  
-  fileprivate var AM_testIsFirstResponderValue: Bool {
-    get {
-      if let associatedObject = objc_getAssociatedObject(self, &AssociatedKeys.TestIsFirstResponderValue) as? Bool {
-        return associatedObject
+    func AM_testBecomeFirstResponder() -> Bool {
+        AM_testIsFirstResponderValue = true
+        self.AM_testBecomeFirstResponder()
         
-      }
-      return false
+        return AM_testIsFirstResponderValue
     }
-    set {
-      objc_setAssociatedObject(self,
-        &AssociatedKeys.TestIsFirstResponderValue,
-        newValue,
-        objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+    
+    func AM_testResignFirstResponder() -> Bool {
+        AM_testIsFirstResponderValue = false
+        self.AM_testResignFirstResponder()
+        
+        return AM_testIsFirstResponderValue
     }
-  }
-  
+    
+    func AM_testIsFirstResponder() -> Bool {
+        return AM_testIsFirstResponderValue
+    }
+    
+    fileprivate struct AssociatedKeys {
+        static var TestIsFirstResponderValue = "AM_testIsFirstResponderValue"
+    }
+    
+    fileprivate var AM_testIsFirstResponderValue: Bool {
+        get {
+            if let associatedObject = objc_getAssociatedObject(self,
+                                                               &AssociatedKeys.TestIsFirstResponderValue) as? Bool {
+                
+                return associatedObject
+                
+            }
+            return false
+        }
+        set {
+            objc_setAssociatedObject(self,
+                                     &AssociatedKeys.TestIsFirstResponderValue,
+                                     newValue,
+                                     objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        }
+    }
+    
 }
 
 /*
@@ -156,24 +158,24 @@ fileprivate let swizzleUITextFieldResignFirstResponder: () = {
 }()
 
 extension UITextField {
-  open override class func initialize() {
-    swizzleUITextFieldBecomeFirstResponder
-    swizzleUITextFieldResignFirstResponder
-  }
-
-  func AM_testBypassBecomeFirstResponder() -> Bool {
-    shouldHaveMockWindow = true
-    defer { shouldHaveMockWindow = false }
-    return self.AM_testBypassBecomeFirstResponder()
+    open override class func initialize() {
+        swizzleUITextFieldBecomeFirstResponder
+        swizzleUITextFieldResignFirstResponder
+    }
     
-  }
-
-  func AM_testBypassResignFirstResponder() -> Bool {
-    shouldHaveMockWindow = true
-    defer { shouldHaveMockWindow = false }
-    return self.AM_testBypassResignFirstResponder()
-  }
-
+    func AM_testBypassBecomeFirstResponder() -> Bool {
+        shouldHaveMockWindow = true
+        defer { shouldHaveMockWindow = false }
+        return self.AM_testBypassBecomeFirstResponder()
+        
+    }
+    
+    func AM_testBypassResignFirstResponder() -> Bool {
+        shouldHaveMockWindow = true
+        defer { shouldHaveMockWindow = false }
+        return self.AM_testBypassResignFirstResponder()
+    }
+    
 }
 
 /*
@@ -198,8 +200,8 @@ fileprivate let swizzleUITextViewResignFirstResponder: () = {
 
 extension UITextView {
     open override class func initialize() {
-     swizzleUITextViewBecomeFirstResponder
-     swizzleUITextViewResignFirstResponder
+        swizzleUITextViewBecomeFirstResponder
+        swizzleUITextViewResignFirstResponder
     }
     
     func AM_testBypassBecomeFirstResponder() -> Bool {
