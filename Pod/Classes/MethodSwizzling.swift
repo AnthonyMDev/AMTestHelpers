@@ -1,4 +1,4 @@
-func swizzleMethod(onClass: AnyClass, originalSelector: Selector, swizzledSelector: Selector) {
+func swizzleMethod(_ onClass: AnyClass, originalSelector: Selector, swizzledSelector: Selector) {
   let originalMethod = class_getInstanceMethod(onClass, originalSelector)
   let swizzledMethod = class_getInstanceMethod(onClass, swizzledSelector)
   

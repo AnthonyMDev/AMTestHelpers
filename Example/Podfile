@@ -3,7 +3,7 @@ use_frameworks!
 
 pod "JRSwizzle", "~> 1.0"
 
-target 'AMTestHelpers_Tests', :exclusive => true do
+target 'AMTestHelpers_Tests' do
   pod "AMTestHelpers", :path => "../"
   
 end
