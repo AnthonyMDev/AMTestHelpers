@@ -49,81 +49,96 @@ fileprivate let swizzleUINavigationControllerPopToRootViewController: () = {
     }
 }()
 
+fileprivate let swizzleUINavigationControllerViewControllersProperty: () = {
+    let originalGetter = #selector(getter: UINavigationController.viewControllers)
+    let swizzledGetter = #selector(getter: UINavigationController.AM_testViewControllers)
+    
+    do { try UINavigationController.self.jr_swizzleMethod(originalGetter, withMethod: swizzledGetter) } catch {
+        debugPrint(error)
+    }
+    
+    let originalSetter = #selector(setter: UINavigationController.viewControllers)
+    let swizzledSetter = #selector(setter: UINavigationController.AM_testViewControllers)
+    
+    do { try UINavigationController.self.jr_swizzleMethod(originalSetter, withMethod: swizzledSetter) } catch {
+        debugPrint(error)
+    }
+    
+}()
+
+fileprivate let swizzleUINavigationControllerTopViewController: () = {
+    let originalSelector = #selector(getter: UINavigationController.topViewController)
+    let swizzledSelector = #selector(getter: UINavigationController.AM_testTopViewController)
+    
+    do { try UINavigationController.self.jr_swizzleMethod(originalSelector, withMethod: swizzledSelector) } catch {
+        debugPrint(error)
+    }
+}()
+
 extension UINavigationController {
     open override class func initialize() {
         swizzleUINavigationControllerPushViewController
         swizzleUINavigationControllerPopViewController
         swizzleUINavigationControllerPopToViewController
         swizzleUINavigationControllerPopToRootViewController
+        swizzleUINavigationControllerViewControllersProperty
+        swizzleUINavigationControllerTopViewController
     }
     
     func AM_testPushViewController(_ viewController: UIViewController, animated: Bool) {
-        if let VCs = self.AM_testViewControllers {
-            let newVCs = VCs + [viewController]
-            self.AM_testViewControllers = newVCs
-            
-        } else {
-            self.AM_testViewControllers = [viewController]
-        }
+        self.viewControllers = self.viewControllers + [viewController]
+        
         self.addChildViewController(viewController)
     }
     
     func AM_testPopViewControllerAnimated(_ animated: Bool) -> UIViewController? {
-        if var VCs = self.AM_testViewControllers {
-            let poppedVC = VCs.removeLast()
-            poppedVC.removeFromParentViewController()
-            
-            self.AM_testViewControllers = VCs
-            return poppedVC
-        }
+        let poppedVC = self.viewControllers.last
+        poppedVC?.removeFromParentViewController()
         
-        return nil
+        self.viewControllers = Array(self.viewControllers.dropLast())
+        return poppedVC
     }
     
     func AM_testPopToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
-        if var VCs = self.AM_testViewControllers {
-            var foundVC = false
-            var poppedVCs: [UIViewController] = []
-            
-            while !foundVC {
-                let VC = VCs.last
-                if VC === viewController {
-                    foundVC = true
-                    
-                } else {
-                    let poppedVC = VCs.removeLast()
-                    poppedVC.removeFromParentViewController()
-                    poppedVCs.append(poppedVC)
-                }
+        var VCs = self.viewControllers
+        var foundVC = false
+        var poppedVCs: [UIViewController] = []
+        
+        while !foundVC {
+            let VC = VCs.last
+            if VC === viewController {
+                foundVC = true
+                
+            } else {
+                let poppedVC = VCs.removeLast()
+                poppedVC.removeFromParentViewController()
+                poppedVCs.append(poppedVC)
             }
-            
-            self.AM_testViewControllers = VCs
-            return poppedVCs
         }
         
-        return nil
+        self.viewControllers = VCs
+        return poppedVCs
     }
     
     func AM_testPopToRootViewControllerAnimated(_ animated: Bool) -> [UIViewController]? {
-        if var VCs = self.AM_testViewControllers {
-            if VCs.first === viewControllers.first {
-                VCs.removeFirst()
-            }
-            self.AM_testViewControllers = nil
-            for VC in VCs {
-                VC.removeFromParentViewController()
-            }
-            return VCs
+        guard let rootVC = self.viewControllers.first,
+            self.viewControllers.count > 1 else { return nil }
+        
+        let oldVCs = self.viewControllers.dropFirst()
+        self.viewControllers = [rootVC]
+        
+        for VC in oldVCs {
+            VC.removeFromParentViewController()
         }
         
-        return nil
+        return Array(oldVCs)
     }
     
     fileprivate struct AssociatedKeys {
         static var TestViewControllers = "AM_testViewControllers"
     }
     
-    public var AM_testViewControllers: [UIViewController]? {
+    var AM_testViewControllers: [UIViewController] {
         get {
             guard let VCs = objc_getAssociatedObject(self,
                                                      &AssociatedKeys.TestViewControllers) as? [UIViewController] else {
@@ -131,7 +146,7 @@ extension UINavigationController {
                 if let rootVC = viewControllers.first {
                     return [rootVC]
                 } else {
-                    return nil
+                    return []
                 }
             }
             
@@ -149,9 +164,9 @@ extension UINavigationController {
         }
     }
     
-    public var AM_testTopViewController: UIViewController? {
+    var AM_testTopViewController: UIViewController? {
         get {
-            return AM_testViewControllers?.last
+            return self.viewControllers.last
         }
     }
     
