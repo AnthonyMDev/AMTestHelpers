@@ -47,14 +47,14 @@ extension UIResponder {
     
     func AM_testBecomeFirstResponder() -> Bool {
         AM_testIsFirstResponderValue = true
-        self.AM_testBecomeFirstResponder()
+        _ = self.AM_testBecomeFirstResponder()
         
         return AM_testIsFirstResponderValue
     }
     
     func AM_testResignFirstResponder() -> Bool {
         AM_testIsFirstResponderValue = false
-        self.AM_testResignFirstResponder()
+        _ = self.AM_testResignFirstResponder()
         
         return AM_testIsFirstResponderValue
     }

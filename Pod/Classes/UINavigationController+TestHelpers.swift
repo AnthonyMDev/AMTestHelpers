@@ -143,14 +143,14 @@ extension UINavigationController {
             guard let VCs = objc_getAssociatedObject(self,
                                                      &AssociatedKeys.TestViewControllers) as? [UIViewController] else {
                                                         
-                if let rootVC = viewControllers.first {
+                if let rootVC = AM_testViewControllers.first {
                     return [rootVC]
                 } else {
                     return []
                 }
             }
             
-            if let rootVC = viewControllers.first , VCs.first != rootVC {
+            if let rootVC = AM_testViewControllers.first, VCs.first != rootVC {
                 return [rootVC] + VCs
             }
             

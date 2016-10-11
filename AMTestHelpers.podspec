@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "AMTestHelpers"
-  s.version          = "1.0.1-beta1"
+  s.version          = "1.0.1"
   s.summary          = "A collection of extensions and methods that make unit testing difficult behaviors easy."
   s.description      = <<-DESC
     `AMTestHelpers` helps make unit testing behaviors that are difficult to test, such as presenting view controllers, simple and easy through method swizzling.
