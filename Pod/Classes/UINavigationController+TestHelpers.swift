@@ -86,9 +86,10 @@ extension UINavigationController {
     }
     
     func AM_testPushViewController(_ viewController: UIViewController, animated: Bool) {
-        self.viewControllers = self.viewControllers + [viewController]
-        
+        var viewControllers = self.viewControllers
+        viewControllers.append(viewController)
         self.addChildViewController(viewController)
+        self.viewControllers = viewControllers
     }
     
     func AM_testPopViewControllerAnimated(_ animated: Bool) -> UIViewController? {
@@ -143,20 +144,35 @@ extension UINavigationController {
             guard let VCs = objc_getAssociatedObject(self,
                                                      &AssociatedKeys.TestViewControllers) as? [UIViewController] else {
                                                         
-                if let rootVC = self.AM_testViewControllers.first {
-                    return [rootVC]
-                } else {
-                    return []
-                }
+                                                        if let rootVC = AM_testViewControllers.first {
+                                                            objc_setAssociatedObject(self,
+                                                                                     &AssociatedKeys.TestViewControllers,
+                                                                                     [rootVC],
+                                                                                     objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                                                            
+                                                            return [rootVC]
+                                                        } else {
+                                                            objc_setAssociatedObject(self,
+                                                                                     &AssociatedKeys.TestViewControllers,
+                                                                                     [],
+                                                                                     objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                                                            return []
+                                                        }
             }
             
-            if let rootVC = self.AM_testViewControllers.first, VCs.first != rootVC {
+            if let rootVC = AM_testViewControllers.first, VCs.first != rootVC {
                 return [rootVC] + VCs
             }
             
             return VCs
         }
         set {
+            for viewControllers in self.viewControllers {
+                viewControllers.removeFromParentViewController()
+            }
+            for viewController in newValue {
+                self.addChildViewController(viewController)
+            }
             objc_setAssociatedObject(self,
                                      &AssociatedKeys.TestViewControllers,
                                      newValue,
