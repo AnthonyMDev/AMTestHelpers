@@ -10,9 +10,9 @@ import UIKit
 
 fileprivate let swizzleUIAlertActionInitializer: () = {
     let originalSelector = #selector(UIAlertAction.init(title:style:handler:))
-    let swizzledSelector = #selector(UIAlertAction.init(AM_title:style:handler:))
+    let swizzledSelector = #selector(UIAlertAction.AM_init(title:style:handler:))
     
-    do { try UIAlertAction.self.jr_swizzleMethod(originalSelector, withMethod: swizzledSelector) } catch {
+    do { try UIAlertAction.self.jr_swizzleClassMethod(originalSelector, withClassMethod: swizzledSelector) } catch {
         debugPrint(error)
     }
 }()
@@ -33,13 +33,15 @@ extension UIAlertAction {
         }
         set {
             let actionHandler = UIAlertActionHandler(closure: newValue)
-            objc_setAssociatedObject(self, &AssociatedKeys.Handler, actionHandler, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.Handler,
+                                     actionHandler, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
-    convenience init(AM_title: String?, style: UIAlertActionStyle, handler: ((UIAlertAction) -> Swift.Void)? = nil) {
-        self.init(title: AM_title, style: style, handler: handler)
-        self.AM_handler = handler
+    class func AM_init(title: String?, style: UIAlertActionStyle, handler: ((UIAlertAction) -> Swift.Void)?) -> UIAlertAction {
+        let _self = AM_init(title: title, style: style, handler: handler)
+        _self.AM_handler = handler
+        return _self
     }
     
     /// Executes the handler that the receiver was initialized with.
