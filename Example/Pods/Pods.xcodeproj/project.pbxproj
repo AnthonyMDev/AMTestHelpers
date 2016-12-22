@@ -14,6 +14,7 @@
 		580C23901E6BD4CA11E6BE896C0A5230 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBE64356C3BD39E40834B2D7F518096D /* UIKit.framework */; };
 		66AE7D48DA43596A28D207A6136B1169 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E3DE59FAD7EF4327C72AFADD87BFBD9 /* Foundation.framework */; };
 		6AD282A30BC293CB0CB97A1CEB1A49D5 /* MethodSwizzling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C348BFE2B3FC3C6033BB791680530B /* MethodSwizzling.swift */; };
+		92E7609C1E0B4BB100B5FFAC /* UIAlertController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E7609B1E0B4BB100B5FFAC /* UIAlertController+TestHelpers.swift */; };
 		A6CD871E43A65A37D00C8896922C0AE6 /* Pods-AMTestHelpers_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FAB52ADAA31A36B640E7E807DB7F50E /* Pods-AMTestHelpers_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD1A7DB04D233C3486BE0D846E21B954 /* AMTestHelpers-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A86C62E25B0A9297F0320A44DDAEF164 /* AMTestHelpers-dummy.m */; };
 		B200A954A62999022EF95D34CA5DF4F1 /* JRSwizzle-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9025F99F939C0781698B8985790B96D1 /* JRSwizzle-dummy.m */; };
@@ -72,6 +73,7 @@
 		9025F99F939C0781698B8985790B96D1 /* JRSwizzle-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JRSwizzle-dummy.m"; sourceTree = "<group>"; };
 		90C348BFE2B3FC3C6033BB791680530B /* MethodSwizzling.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MethodSwizzling.swift; sourceTree = "<group>"; };
 		92A9D81D0F9F349783C0E0442DA6DBED /* UINavigationController+TestHelpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UINavigationController+TestHelpers.swift"; sourceTree = "<group>"; };
+		92E7609B1E0B4BB100B5FFAC /* UIAlertController+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+TestHelpers.swift"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		99C5B93D258D5FA9DB536DA98C841554 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EF4ED75D75757CEF565014DD6A63A6C /* Pods-AMTestHelpers_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AMTestHelpers_Tests-frameworks.sh"; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				CF5EC933CBC0DAC7DB18B91994A50DE7 /* UIResponder+TestHelpers.swift */,
 				A2C5954F9B86A2AAF67E0F08E5F485CE /* UIViewController+TestHelpers.swift */,
 				1E60E4A71D8CB51200BE29A7 /* UIControl+TestHelpers.swift */,
+				92E7609B1E0B4BB100B5FFAC /* UIAlertController+TestHelpers.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				6AD282A30BC293CB0CB97A1CEB1A49D5 /* MethodSwizzling.swift in Sources */,
 				F5A9F55FC068CFA38026FC8A41969405 /* UINavigationController+TestHelpers.swift in Sources */,
 				1E60E4A81D8CB51200BE29A7 /* UIControl+TestHelpers.swift in Sources */,
+				92E7609C1E0B4BB100B5FFAC /* UIAlertController+TestHelpers.swift in Sources */,
 				C0955D88EF5FA872C230B213FE5C649A /* UIResponder+TestHelpers.swift in Sources */,
 				2C4D7FF79A02E93EE85BD0862F82B844 /* UIViewController+TestHelpers.swift in Sources */,
 			);
