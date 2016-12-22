@@ -47,6 +47,10 @@ func test_nextButtonIsPressed_presentsNextViewController() {
 
 When `becomeFirstResponder` is called, the property `AM_isFirstResponder` will be set to `true`. When `resignFirstResponder` is called, it will be set to `false`. `isFirstResponder` will return the value of `AM_isFirstResponder`.
 
+### UIAlertController
+
+This library adds an `executeHandler()` function to `UIAlertAction` and an `executeAction(withTitle:)` function to `UIAlertController` that can be used in your unit tests to programtically call the handler for an action on a `UIAlertController`.
+
 ## Author
 
 Anthony Miller, AnthonyMDev@gmail.com
