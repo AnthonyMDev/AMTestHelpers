@@ -18,7 +18,10 @@
   },
   "requires_arc": true,
   "source_files": "Pod/Classes/**/*",
-  "frameworks": "UIKit",
+  "frameworks": [
+    "UIKit",
+    "XCTest"
+  ],
   "dependencies": {
     "JRSwizzle": [
       "~> 1.0"

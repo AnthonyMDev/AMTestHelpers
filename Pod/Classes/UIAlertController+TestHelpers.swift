@@ -17,9 +17,9 @@ fileprivate let swizzleUIAlertActionInitializer: () = {
     }
 }()
 
-extension UIAlertAction {
+extension UIAlertAction : Preparable {
     
-    open override class func initialize() {
+    open class func prepareForUse() {
         swizzleUIAlertActionInitializer
     }
     
@@ -38,7 +38,7 @@ extension UIAlertAction {
         }
     }
     
-    class func AM_init(title: String?, style: UIAlertActionStyle, handler: ((UIAlertAction) -> Swift.Void)?) -> UIAlertAction {
+    @objc class func AM_init(title: String?, style: UIAlertActionStyle, handler: ((UIAlertAction) -> Swift.Void)?) -> UIAlertAction {
         let _self = AM_init(title: title, style: style, handler: handler)
         _self.AM_handler = handler
         return _self

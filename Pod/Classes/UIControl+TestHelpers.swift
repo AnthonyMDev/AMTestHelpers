@@ -22,13 +22,13 @@ fileprivate let swizzleUIControlSendAction: () = {
 
 extension UIControl {
     
-    open override class func initialize() {
+    open override class func prepareForUse() {
         swizzleUIControlSendAction
     }
     
     // MARK: - Method Swizzling
     
-    func AM_sendAction(_ action: Selector, to target: AnyObject?, for event: UIEvent?) {
+    @objc func AM_sendAction(_ action: Selector, to target: AnyObject?, for event: UIEvent?) {
         _ = target?.perform(action, with: self)
     }
 }
