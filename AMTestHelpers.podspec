@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Pod/Classes/**/*'
 
-  s.frameworks = 'UIKit'
+  s.frameworks = 'UIKit', 'XCTest'
 
   s.dependency "JRSwizzle", "~> 1.0"
 end

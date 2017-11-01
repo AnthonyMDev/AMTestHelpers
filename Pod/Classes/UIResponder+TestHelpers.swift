@@ -38,28 +38,29 @@ fileprivate let swizzleUIResponderIsFirstResponder: () = {
     }
 }()
 
-extension UIResponder {
-    open override class func initialize() {
+extension UIResponder : Preparable {
+    
+    @objc open class func prepareForUse() {
         swizzleUIResponderBecomeFirstResponder
         swizzleUIResponderResignFirstResponder
         swizzleUIResponderIsFirstResponder
     }
     
-    func AM_testBecomeFirstResponder() -> Bool {
+    @objc func AM_testBecomeFirstResponder() -> Bool {
         AM_testIsFirstResponderValue = true
         _ = self.AM_testBecomeFirstResponder()
         
         return AM_testIsFirstResponderValue
     }
     
-    func AM_testResignFirstResponder() -> Bool {
+    @objc func AM_testResignFirstResponder() -> Bool {
         AM_testIsFirstResponderValue = false
         _ = self.AM_testResignFirstResponder()
         
         return AM_testIsFirstResponderValue
     }
     
-    func AM_testIsFirstResponder() -> Bool {
+    @objc func AM_testIsFirstResponder() -> Bool {
         return AM_testIsFirstResponderValue
     }
     
@@ -100,11 +101,11 @@ fileprivate let swizzleUIViewWindow: () = {
 }()
 
 extension UIView {
-    open override class func initialize() {
+    open override class func prepareForUse() {
         swizzleUIViewWindow
     }
     
-    func AM_windowIfNil() -> UIWindow? {
+    @objc func AM_windowIfNil() -> UIWindow? {
         if let window = AM_windowIfNil() {
             return window
         }
@@ -158,19 +159,19 @@ fileprivate let swizzleUITextFieldResignFirstResponder: () = {
 }()
 
 extension UITextField {
-    open override class func initialize() {
+    open override class func prepareForUse() {
         swizzleUITextFieldBecomeFirstResponder
         swizzleUITextFieldResignFirstResponder
     }
     
-    func AM_testBypassBecomeFirstResponder() -> Bool {
+    @objc func AM_testBypassBecomeFirstResponder() -> Bool {
         shouldHaveMockWindow = true
         defer { shouldHaveMockWindow = false }
         return self.AM_testBypassBecomeFirstResponder()
         
     }
     
-    func AM_testBypassResignFirstResponder() -> Bool {
+    @objc func AM_testBypassResignFirstResponder() -> Bool {
         shouldHaveMockWindow = true
         defer { shouldHaveMockWindow = false }
         return self.AM_testBypassResignFirstResponder()
@@ -199,19 +200,19 @@ fileprivate let swizzleUITextViewResignFirstResponder: () = {
 }()
 
 extension UITextView {
-    open override class func initialize() {
+    open override class func prepareForUse() {
         swizzleUITextViewBecomeFirstResponder
         swizzleUITextViewResignFirstResponder
     }
     
-    func AM_testBypassBecomeFirstResponder() -> Bool {
+    @objc func AM_testBypassBecomeFirstResponder() -> Bool {
         shouldHaveMockWindow = true
         defer { shouldHaveMockWindow = false }
         return self.AM_testBypassBecomeFirstResponder()
         
     }
     
-    func AM_testBypassResignFirstResponder() -> Bool {
+    @objc func AM_testBypassResignFirstResponder() -> Bool {
         shouldHaveMockWindow = true
         defer { shouldHaveMockWindow = false }
         return self.AM_testBypassResignFirstResponder()

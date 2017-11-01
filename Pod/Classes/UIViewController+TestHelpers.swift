@@ -46,14 +46,14 @@ fileprivate let swizzleUIViewControllerPresentingViewController: () = {
 }()
 
 extension UIViewController {
-    open override class func initialize() {
+    open override class func prepareForUse() {
         swizzleUIViewControllerPresentViewController
         swizzleUIViewControllerDismissViewController
         swizzleUIViewControllerPresentedViewController
         swizzleUIViewControllerPresentingViewController
     }
     
-    func AM_testPresentViewController(_ viewControllerToPresent: UIViewController,
+    @objc func AM_testPresentViewController(_ viewControllerToPresent: UIViewController,
                                       animated flag: Bool,
                                       completion: (() -> Void)?) {
         
@@ -62,17 +62,17 @@ extension UIViewController {
         completion?()
     }
     
-    func AM_testDismissViewControllerAnimated(_ flag: Bool, completion: (() -> Void)?) {
+    @objc func AM_testDismissViewControllerAnimated(_ flag: Bool, completion: (() -> Void)?) {
         self.AM_testPresentedViewController?.AM_testPresentingViewController = nil
         self.AM_testPresentedViewController = nil
         completion?()
     }
     
-    func AM_testGetPresentedViewController() -> UIViewController? {
+    @objc func AM_testGetPresentedViewController() -> UIViewController? {
         return AM_testPresentedViewController
     }
     
-    func AM_testGetPresentingViewController() -> UIViewController? {
+    @objc func AM_testGetPresentingViewController() -> UIViewController? {
         return AM_testPresentingViewController
     }
     
