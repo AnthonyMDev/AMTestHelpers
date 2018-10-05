@@ -1,0 +1,6 @@
+framework module Pods_AMTestHelpers {
+  umbrella header "Pods-AMTestHelpers-umbrella.h"
+
+  export *
+  module * { export * }
+}
